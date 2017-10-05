@@ -88,22 +88,24 @@ public class Robot extends IterativeRobot {
 		
 		//Open or close the gear intake
 		if(Jleft.getRisingEdge(1)){
-			gear.openGear();
-			Waiter.waitFor(200);
 			gear.pushGear();
 		}
 		else if(Jleft.getFallingEdge(1)) {
-			gear.closeGear();
-			gear.pushBack();
+			
 		}
 		
-		//open and close gear flap, also centers turret
+		//auto raise and lower gear
 		if(Jleft.getRisingEdge(2)) {
-			gear.openFlap();
+			gear.autoUp();
 		}
-		else if(Jleft.getFallingEdge(2)) {
-			gear.closeFlap();
+		//manual raise and lower gear
+		if(Jleft.getRisingEdge(3)) {
+			gear.gearUp();
 		}
+		if(Jleft.getRisingEdge(4)) {
+			gear.gearDown();
+		}
+		
 		
 		//Climber State
 		if(Jsecond.getRisingEdge(3)){
