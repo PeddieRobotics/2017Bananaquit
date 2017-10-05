@@ -51,6 +51,10 @@ public class GearReceiver {
 		autoUp = true;
 	}
 	
+	public void stopMotor() {
+		m1.set(0);
+	}
+	
 	public void update() {
 		if(autoUp == true) {
 			haveGear();
