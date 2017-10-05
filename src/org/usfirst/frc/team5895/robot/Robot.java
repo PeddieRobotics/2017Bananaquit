@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		String distance = SmartDashboard.getString("DB/String 2", "nothing");
 		
 		if(routine.contains("blue")) {
-			else if(gameplan.contains("gear")){
+			 if(gameplan.contains("gear")){
 				if(distance.contains("center")) {
 					BlueCenterGear.run(drivetrain, gear);
 				} else {
@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		if(routine.contains("red")) {
-			else if(gameplan.contains("gear")){
+			if(gameplan.contains("gear")){
 				if(distance.contains("center")) {
 					RedCenterGear.run(drivetrain, gear);
 				}
@@ -68,15 +68,15 @@ public class Robot extends IterativeRobot {
 				RedGear.run(drivetrain, gear);
 			}
 			}
-		}
 		
-		else if(routine.contains("center")) {
+			else if(routine.contains("center")) {
 			if(gameplan.contains("gear")) {
 				CenterGear.run(drivetrain, gear);
 			}
 		}
 		else {
 			DoNothing.run();
+		}
 		}
 	}
 
