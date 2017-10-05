@@ -33,7 +33,7 @@ public class GearReceiver {
 	}
 	
 	public void update() {
-		
+		haveGear();
 	}
 
 }
