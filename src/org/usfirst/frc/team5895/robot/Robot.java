@@ -119,16 +119,16 @@ public class Robot extends IterativeRobot {
 	
 		drivetrain.arcadeDrive(0, 0);
 		climber.stopClimbing();
-		gear.closeFlap();
-		gear.closeGear();
+		gear.gearDown();
+		gear.stopMotor();
 	}
 	
 	public void disabledInit() {
 		recorder.stopRecording();
 		drivetrain.arcadeDrive(0, 0);
 		climber.stopClimbing();
-		gear.closeFlap();
-		gear.closeGear();
+		gear.gearDown();
+		gear.stopMotor();
 	}
 	
 }
