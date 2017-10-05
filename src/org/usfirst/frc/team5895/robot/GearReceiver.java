@@ -11,6 +11,7 @@ public class GearReceiver {
 	private Talon m1;
 	private DigitalInput sensor;
 	private boolean haveGear;
+	private boolean autoUp;
 
 
 	public GearReceiver() {
@@ -23,12 +24,10 @@ public class GearReceiver {
 		if(sensor.get()== true) {
 			haveGear = true;
 			m1.set(0.1);
-			solenoid.set(true);
 		}
 		else {
 			haveGear = false;
 			m1.set(1);
-			solenoid.set(false);
 		}
 	}
 	
@@ -38,8 +37,25 @@ public class GearReceiver {
 		}
 	}
 	
+	public void gearUp() {
+		haveGear = true;
+		autoUp = false;
+	}
+	
+	public void gearDown() {
+		haveGear = false;
+		autoUp = false;
+	}
+	
+	public void autoUp() {
+		autoUp = true;
+	}
+	
 	public void update() {
-		haveGear();
+		if(autoUp == true) {
+			haveGear();
+		}
+		solenoid.set(haveGear);
 	}
 
 }
