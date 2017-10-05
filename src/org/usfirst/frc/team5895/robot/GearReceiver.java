@@ -32,6 +32,12 @@ public class GearReceiver {
 		}
 	}
 	
+	public void pushGear() {
+		if(haveGear == true) {
+			m1.set(-1);
+		}
+	}
+	
 	public void update() {
 		haveGear();
 	}
