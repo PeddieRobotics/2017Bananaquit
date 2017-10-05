@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class RedCenterGear {
 	
-	public static void run(DriveTrain drivetrain, GearReceiver gear, LookupTable redTable, Turret turret, Shooter shooter, Vision vision) {
+	public static void run(DriveTrain drivetrain, GearReceiver gear) {
 
 		drivetrain.auto_center_gearDrive();
 		Waiter.waitFor(drivetrain::isFinished, 4000);
@@ -26,17 +26,11 @@ public class RedCenterGear {
 		gear.pushGear();
 		Waiter.waitFor(500);
 		drivetrain.auto_center_gear_redDrive();
-		shooter.setSpeed(3200);
 		Waiter.waitFor(drivetrain::isFinished, 4000);
 		drivetrain.arcadeDrive(0, 0);
 		gear.closeGear();
 		gear.pushBack();
-		turret.turnTo(turret.getAngle() + vision.getX() - 2);
 		Waiter.waitFor(200);
-		Waiter.waitFor(shooter::atSpeed, 2000);
-		if(shooter.getSpeed() > 10) {
-			shooter.shoot();
-//			DriverStation.reportError("" + shooter.getSpeed(), false);
 		}
 	}
 }

@@ -13,11 +13,8 @@ public class CenterGear {
 	 * center gear auto no shooting
 	 * @param drivetrain
 	 * @param gear
-	 * @param turret
-	 * @param shooter
-	 * @param vision
 	 */
-	public static void run(DriveTrain drivetrain, GearReceiver gear, Turret turret, Shooter shooter, Vision vision) {
+	public static void run(DriveTrain drivetrain, GearReceiver gear) {
 
 		drivetrain.auto_center_gearDrive();
 		Waiter.waitFor(drivetrain::isFinished, 4000);

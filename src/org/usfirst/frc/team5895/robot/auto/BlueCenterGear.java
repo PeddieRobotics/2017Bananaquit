@@ -16,13 +16,9 @@ public class BlueCenterGear {
 	 * blue center gear auto
 	 * @param drivetrain
 	 * @param gear
-	 * @param blueTable
-	 * @param turret
-	 * @param shooter
-	 * @param vision
 	 */
 	
-	public static void run(DriveTrain drivetrain, GearReceiver gear, LookupTable blueTable, Turret turret, Shooter shooter, Vision vision) {
+	public static void run(DriveTrain drivetrain, GearReceiver gear) {
 
 		drivetrain.auto_center_gearDrive();
 		Waiter.waitFor(drivetrain::isFinished, 4000);
@@ -36,17 +32,10 @@ public class BlueCenterGear {
 		gear.pushGear();
 		Waiter.waitFor(500);
 		drivetrain.auto_center_gear_blueDrive();
-		shooter.setSpeed(3200);
 		Waiter.waitFor(drivetrain::isFinished, 4000);
 		drivetrain.arcadeDrive(0, 0);
 		gear.closeGear();
 		gear.pushBack();
-		turret.turnTo(turret.getAngle() + vision.getX() + 4);
 		Waiter.waitFor(200);
-		Waiter.waitFor(shooter::atSpeed, 2000);
-		if(shooter.getSpeed() > 10) {
-			shooter.shoot();
-//			DriverStation.reportError("" + shooter.getSpeed(), false);
 		}
 	}
-}
