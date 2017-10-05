@@ -1,74 +1,39 @@
 package org.usfirst.frc.team5895.robot;
 
 import org.usfirst.frc.team5895.robot.framework.Waiter;
-
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class GearReceiver {
 
-	private Solenoid flapSolenoid, dropSolenoid, pushSolenoid;
-	private boolean flapState;
-	private boolean dropState;
-	private boolean pushState;
+	private Solenoid solenoid;
+	private Talon m1;
+	private DigitalInput sensor;
+	private boolean haveGear;
+
 
 	public GearReceiver() {
-		flapSolenoid = new Solenoid(ElectricalLayout.GEAR_FLAP_SOLENOID);
-		dropSolenoid = new Solenoid(ElectricalLayout.GEAR_DROP_SOLENOID);
-		pushSolenoid = new Solenoid(ElectricalLayout.SPARE);
+		solenoid = new Solenoid(ElectricalLayout.GEAR_SOLENOID);
+		m1 = new Talon(ElectricalLayout.GEAR_MOTOR);
+		sensor = new DigitalInput(ElectricalLayout.GEAR_SENSOR);
 	}
 
-	/**
-	 * Closes the gear flap
-	 */
-	public void closeFlap() {
-		flapState=false; 
+	public void haveGear() {
+		if(sensor.get()== true) {
+			haveGear = true;
+			m1.set(0.1);
+			solenoid.set(true);
+		}
+		else {
+			haveGear = false;
+			m1.set(1);
+			solenoid.set(false);
+		}
 	}
-
-	/**
-	 * Opens the gear flap
-	 */
-	public void openFlap() {
-		flapState=true;
-	}
-	
-	/**
-	 * Closes the gear drop
-	 */
-	public void closeGear(){
-		dropState = false;
-	}
-	
-	/**
-	 * opens the gear drop
-	 */
-	public void openGear(){
-		dropState = true;
-	}
-	
-	/**
-	 * pushes gear forward
-	 */
-	public void pushGear(){
-		pushState = true;
-	}
-	
-	/**
-	 * puts back the gear push
-	 */
-	public void pushBack(){
-		pushState = false;
- 	}
 	
 	public void update() {
-		if(flapSolenoid.get() != flapState){
-			flapSolenoid.set(flapState);
-		}
-		if(dropSolenoid.get() != dropState) {
-			dropSolenoid.set(dropState);
-		}
-		if(pushSolenoid.get() != pushState){
-			pushSolenoid.set(pushState);
-		}
+		
 	}
 
 }
