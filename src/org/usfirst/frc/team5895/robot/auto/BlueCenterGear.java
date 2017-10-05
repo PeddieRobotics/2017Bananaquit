@@ -2,10 +2,7 @@ package org.usfirst.frc.team5895.robot.auto;
 
 import org.usfirst.frc.team5895.robot.DriveTrain;
 import org.usfirst.frc.team5895.robot.GearReceiver;
-import org.usfirst.frc.team5895.robot.Shooter;
-import org.usfirst.frc.team5895.robot.Turret;
-import org.usfirst.frc.team5895.robot.Vision;
-import org.usfirst.frc.team5895.robot.framework.LookupTable;
+
 import org.usfirst.frc.team5895.robot.framework.Waiter;
 
 import edu.wpi.first.wpilibj.DriverStation;
