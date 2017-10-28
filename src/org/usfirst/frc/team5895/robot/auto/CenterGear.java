@@ -16,9 +16,7 @@ public class CenterGear {
 		drivetrain.auto_center_gearDrive();
 		Waiter.waitFor(drivetrain::isFinished, 4000);
 		drivetrain.arcadeDrive(0, 0);
-		gear.openGear();
-		Waiter.waitFor(500);
-		gear.pushGear();
+		gear.placeGear();
 		Waiter.waitFor(1000);
 		drivetrain.arcadeDrive(0.5, 0.5);
 		Waiter.waitFor(2000);

@@ -16,11 +16,10 @@ public class BlueGear {
 		drivetrain.auto_blue_gearDrive();
 		Waiter.waitFor(drivetrain::isFinished, 4000);
 		drivetrain.arcadeDrive(0, 0);
-		gear.openGear();
-		Waiter.waitFor(200);
-		drivetrain.driveStraight(2);
-		Waiter.waitFor(drivetrain::atDistance, 2000);
+		gear.placeGear();
+		Waiter.waitFor(1000);
+		drivetrain.arcadeDrive(0.5, 0.5);
+		Waiter.waitFor(2000);
 		drivetrain.arcadeDrive(0, 0);
-		Waiter.waitFor(200);
 		}
 	}

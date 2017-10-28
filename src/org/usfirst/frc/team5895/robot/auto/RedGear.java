@@ -9,13 +9,11 @@ public class RedGear {
 	public static void run(DriveTrain drivetrain, GearReceiver gear) {
 
 		drivetrain.auto_red_gearDrive();
-		Waiter.waitFor(4000);
+		Waiter.waitFor(drivetrain::isFinished, 4000);
 		drivetrain.arcadeDrive(0, 0);
-		gear.openGear();
-		Waiter.waitFor(500);
-		gear.pushGear();
+		gear.placeGear();
 		Waiter.waitFor(1000);
-		drivetrain.driveStraight(5);
+		drivetrain.arcadeDrive(0.5, 0.5);
 		Waiter.waitFor(2000);
 		drivetrain.arcadeDrive(0, 0);
 		}

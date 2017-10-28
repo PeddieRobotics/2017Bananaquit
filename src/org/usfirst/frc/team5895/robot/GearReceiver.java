@@ -7,44 +7,52 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class GearReceiver {
 
-	private Solenoid solenoid;
-	private Talon m1;
-	private DigitalInput sensor;
+	private Solenoid gearSolenoid;
+	private Talon gearMotor;
+	private DigitalInput gearSensor;
 	private boolean haveGear;
 	private boolean autoUp;
 
 
 	public GearReceiver() {
-		solenoid = new Solenoid(ElectricalLayout.GEAR_SOLENOID);
-		m1 = new Talon(ElectricalLayout.GEAR_MOTOR);
-		sensor = new DigitalInput(ElectricalLayout.GEAR_SENSOR);
+		gearSolenoid = new Solenoid(ElectricalLayout.GEAR_SOLENOID);
+		gearMotor = new Talon(ElectricalLayout.GEAR_MOTOR);
+		gearSensor = new DigitalInput(ElectricalLayout.GEAR_SENSOR);
 	}
 
 	public void haveGear() {
-		if(sensor.get()== true) {
+		if(gearSensor.get() == true) {
 			haveGear = true;
-			m1.set(0.1);
+			gearMotor.set(0.1);
 		}
 		else {
 			haveGear = false;
-			m1.set(1);
+			gearMotor.set(1);
 		}
 	}
 	
-	public void pushGear() {
+	public void reverseGear() {
 		if(haveGear == true) {
-			m1.set(-1);
+			gearMotor.set(-1);
 		}
+	}
+	
+	public void placeGear() {
+		autoUp = false; 
+		gearSolenoid.set(true);
+		Waiter.waitFor(100);
+		gearMotor.set(-1);
+		Waiter.waitFor(100);
 	}
 	
 	public void gearUp() {
-		haveGear = true;
 		autoUp = false;
+		gearSolenoid.set(false);
 	}
 	
 	public void gearDown() {
-		haveGear = false;
 		autoUp = false;
+		gearSolenoid.set(true);
 	}
 	
 	public void autoUp() {
@@ -52,14 +60,14 @@ public class GearReceiver {
 	}
 	
 	public void stopMotor() {
-		m1.set(0);
+		gearMotor.set(0);
 	}
 	
 	public void update() {
+		haveGear();
 		if(autoUp == true) {
-			haveGear();
+			
 		}
-		solenoid.set(haveGear);
 	}
 
 }
