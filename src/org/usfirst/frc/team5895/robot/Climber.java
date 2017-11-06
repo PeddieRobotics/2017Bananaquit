@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5895.robot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Climber {
 

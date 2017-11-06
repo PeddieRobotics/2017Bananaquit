@@ -17,17 +17,9 @@ public class DriveTrain {
 	private Encoder leftEncoder, rightEncoder;
 	private NavX NavX;
 	
-	private TrajectoryDriveController c_red;
-	private TrajectoryDriveController c_blue;
-	private TrajectoryDriveController c_red_far;
-	private TrajectoryDriveController c_blue_far;
-	private TrajectoryDriveController c_blue_close;
-	private TrajectoryDriveController c_red_close;
 	private TrajectoryDriveController c_straight;
 	private TrajectoryDriveController c_in_use;
 	private TrajectoryDriveController c_center_gear_drive;
-	private TrajectoryDriveController c_center_gear_red;
-	private TrajectoryDriveController c_center_gear_blue;
 	private TrajectoryDriveController c_red_gear;
 	private TrajectoryDriveController c_blue_gear;
 
@@ -37,8 +29,12 @@ public class DriveTrain {
 	private static final double DRIVE_KP = 0.08;
 	private static final double DRIVE_KI = 0.0000001;
 	
+	private static final double DRIVE_TURN_KP = 0.01;
+	private static final double DRIVE_TURN_KI = 0.00;
+	
 	private PID turnPID;
 	private PID drivePID;
+	private PID driveTurnPID;
 	
 	public DriveTrain()
 	{
@@ -55,16 +51,8 @@ public class DriveTrain {
 
 		try {
 			//Check back everything. generate the missing splines
-			c_red = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Red.txt", 0.1, 0, 0, 1.0/13.0, 1.0/45.0, -0.010);
-			c_blue = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Blue.txt", 0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
-			c_red_far = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Red_Far.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
-			c_blue_far = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Blue_Far.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
-			c_blue_close = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Blue_Close.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.020);
-			c_red_close = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Balls_Red_Close.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
 			c_straight = new TrajectoryDriveController("/home/lvuser/AutoFiles/Shoot/Straight.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
 			c_center_gear_drive = new TrajectoryDriveController("/home/lvuser/AutoFiles/Gear/Gear_Center_Drive.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
-			c_center_gear_red = new TrajectoryDriveController("/home/lvuser/AutoFiles/Gear/Gear_Center_Red.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
-			c_center_gear_blue = new TrajectoryDriveController("/home/lvuser/AutoFiles/Gear/Gear_Center_Blue.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
 			c_red_gear = new TrajectoryDriveController("/home/lvuser/AutoFiles/Gear/Gear_Red.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.005);
 			c_blue_gear = new TrajectoryDriveController("/home/lvuser/AutoFiles/Gear/Gear_Blue.txt",0.2, 0, 0, 1.0/13.0, 1.0/50.0, -0.010);
 		} catch (Exception e){
@@ -73,6 +61,7 @@ public class DriveTrain {
 		
 		turnPID = new PID(TURN_KP, TURN_KI, 0, 6);
 		drivePID = new PID(DRIVE_KP, DRIVE_KI, 0, 6);
+		driveTurnPID = new PID(DRIVE_TURN_KP, DRIVE_TURN_KI, 0, 6);
 	}
 
 	/**
@@ -109,68 +98,8 @@ public class DriveTrain {
 		leftEncoder.reset();
 		rightEncoder.reset();
 		NavX.reset();
-	}
-	
-	/**
-	 * Red far hopper, hits touchpad
-	 */
-	public void auto_redDrive() {
-		resetEncodersAndNavX();
-		c_red.reset();
-		c_in_use = c_red;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * Blue far hopper, hits touchpad
-	 */
-	public void auto_blueDrive() {
-		resetEncodersAndNavX();
-		c_blue.reset();
-		c_in_use = c_blue;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * blue close hopper
-	 */
-	public void auto_blue_closeDrive() {
-		resetEncodersAndNavX();
-		c_blue_close.reset();
-		c_in_use = c_blue_close;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * red close hopper
-	 */
-	public void auto_red_closeDrive(){
-		resetEncodersAndNavX();
-		c_red_close.reset();
-		c_in_use = c_red_close;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * red far hopper, doesn't hit touchpad
-	 */
-	public void auto_red_farDrive() {
-		resetEncodersAndNavX();
-		c_red_far.reset();
-		c_in_use = c_red_far;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * blue far hopper, doesn't hit touchpad
-	 */
-	public void auto_blue_farDrive() {
-		resetEncodersAndNavX();
-		c_blue_far.reset();
-		c_in_use = c_blue_far;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
+	}	
+
 	/**
 	 * cross baseline
 	 */
@@ -189,28 +118,8 @@ public class DriveTrain {
 		c_center_gear_drive.reset();
 		c_in_use = c_center_gear_drive;
 		mode = Mode_Type.AUTO_BACKWARDS_SPLINE;
-	}
-	
-	/**
-	 * goes from center gear shoots 10 (red)
-	 */
-	public void auto_center_gear_redDrive() {
-		resetEncodersAndNavX();
-		c_center_gear_red.reset();
-		c_in_use = c_center_gear_red;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
-	/**
-	 * goes from center gear shoots 10 (blue)
-	 */
-	public void auto_center_gear_blueDrive() {
-		resetEncodersAndNavX();
-		c_center_gear_blue.reset();
-		c_in_use = c_center_gear_blue;
-		mode = Mode_Type.AUTO_SPLINE;
-	}
-	
+	}	
+
 	/**
 	 * theoretical red side gear
 	 */
@@ -271,8 +180,8 @@ public class DriveTrain {
 	public void driveStraight(double distance) {
 		resetEncodersAndNavX();
 		drivePID.set(distance);
+		driveTurnPID.set(0);
 		mode = Mode_Type.AUTO_DRIVE;
-		DriverStation.reportError("" + getDistance(), false);
 	}
 	
 	/**
@@ -300,7 +209,6 @@ public class DriveTrain {
 	}
 	
 	/**
-	 * All hopper autos plus center gear shooting
 	 * Gear auto drives
 	 * Turn PID
 	 * Distance PID
@@ -337,8 +245,10 @@ public class DriveTrain {
 		break;
 			
 		case AUTO_DRIVE:
-			leftSpeed = -drivePID.getOutput(getDistance());
-			rightSpeed = drivePID.getOutput(getDistance());
+			double straightDriveSpeed = drivePID.getOutput(getDistance());
+			double straightTurnSpeed = driveTurnPID.getOutput(NavX.getAngle());
+			leftSpeed = -straightDriveSpeed + straightTurnSpeed;
+			rightSpeed = straightDriveSpeed + straightTurnSpeed;
 			leftMotor.set(leftSpeed);
 			rightMotor.set(rightSpeed);
 		break;

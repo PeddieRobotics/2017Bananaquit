@@ -48,28 +48,19 @@ public class Robot extends IterativeRobot {
 		
 		if(routine.contains("blue")) {
 			 if(gameplan.contains("gear")){
-				if(distance.contains("center")) {
-					BlueCenterGear.run(drivetrain, gear);
-				} else {
 				BlueGear.run(drivetrain, gear);
-				}	
 			}	
 			else{
 				DoNothing.run();
 			}
 		}
 		
-		if(routine.contains("red")) {
+		else if(routine.contains("red")) {
 			if(gameplan.contains("gear")){
-				if(distance.contains("center")) {
-					RedCenterGear.run(drivetrain, gear);
-				}
-				else {
 				RedGear.run(drivetrain, gear);
 			}
-			}
 		
-			else if(routine.contains("center")) {
+		else if(routine.contains("center")) {
 			if(gameplan.contains("gear")) {
 				CenterGear.run(drivetrain, gear);
 			}
@@ -88,7 +79,7 @@ public class Robot extends IterativeRobot {
 		
 		//Open or close the gear intake
 		if(Jleft.getRisingEdge(1)){
-			gear.pushGear();
+			gear.placeGear();
 		}
 		else if(Jleft.getFallingEdge(1)) {
 			
