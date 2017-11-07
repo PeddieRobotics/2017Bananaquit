@@ -62,7 +62,12 @@ public class Robot extends IterativeRobot {
 		
 		else if(routine.contains("center")) {
 			if(gameplan.contains("gear")) {
-				CenterGear.run(drivetrain, gear);
+				if(distance.contains("no spline")){
+					CenterGearNoSplines.run(drivetrain, gear);
+				}
+				else {
+					CenterGear.run(drivetrain, gear);
+				}
 			}
 		}
 		else {
