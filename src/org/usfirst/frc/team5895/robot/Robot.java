@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
 			if(gameplan.contains("gear")){
 				RedGear.run(drivetrain, gear);
 			}
-		
+		}
 		else if(routine.contains("center")) {
 			if(gameplan.contains("gear")) {
 				if(distance.contains("no spline")){
@@ -72,7 +72,6 @@ public class Robot extends IterativeRobot {
 		}
 		else {
 			DoNothing.run();
-		}
 		}
 	}
 
