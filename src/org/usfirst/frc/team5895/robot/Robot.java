@@ -103,9 +103,9 @@ public class Robot extends IterativeRobot {
 		
 		
 		//Climber State
-		if(Jsecond.getRisingEdge(3)){
+		if(Jright.getRisingEdge(3)){
 			climber.climb();
-		}else if (Jsecond.getRisingEdge(4)){
+		}else if (Jright.getRisingEdge(4)){
 			climber.standing();
 		}
 	}

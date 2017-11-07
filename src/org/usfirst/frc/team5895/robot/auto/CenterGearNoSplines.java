@@ -13,12 +13,12 @@ public class CenterGearNoSplines {
 	 */
 	public static void run(DriveTrain drivetrain, GearReceiver gear) {
 
-		drivetrain.driveStraight(8);
-		Waiter.waitFor(10000);
+		drivetrain.driveStraight(9);
+		Waiter.waitFor(drivetrain::atDistance, 4000);
 		drivetrain.arcadeDrive(0, 0);
 		gear.placeGear();
 		Waiter.waitFor(1000);
-		drivetrain.arcadeDrive(0.5, 0.5);
+		drivetrain.arcadeDrive(0.5, 0);
 		Waiter.waitFor(2000);
 		drivetrain.arcadeDrive(0, 0);
 	}

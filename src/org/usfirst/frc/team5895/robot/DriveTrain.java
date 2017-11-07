@@ -29,7 +29,7 @@ public class DriveTrain {
 	private static final double DRIVE_KP = 0.08;
 	private static final double DRIVE_KI = 0.0000001;
 	
-	private static final double DRIVE_TURN_KP = 0.01;
+	private static final double DRIVE_TURN_KP = 0.001;
 	private static final double DRIVE_TURN_KI = 0.00;
 	
 	private PID turnPID;
@@ -150,6 +150,7 @@ public class DriveTrain {
 		leftSpeed = speed + turn;
 		rightSpeed = -speed + turn;
 		mode = Mode_Type.TELEOP;
+		DriverStation.reportError(" " + leftEncoder.getDistance(), false);
 	}
 	
 	/**
@@ -245,12 +246,12 @@ public class DriveTrain {
 		break;
 			
 		case AUTO_DRIVE:
-			double straightDriveSpeed = drivePID.getOutput(getDistance());
+			double straightDriveSpeed = drivePID.getOutput(-getDistance());
 			double straightTurnSpeed = driveTurnPID.getOutput(NavX.getAngle());
-			leftSpeed = -straightDriveSpeed + straightTurnSpeed;
-			rightSpeed = straightDriveSpeed + straightTurnSpeed;
+			leftSpeed = straightDriveSpeed + straightTurnSpeed;
+			rightSpeed = straightDriveSpeed - straightTurnSpeed;
 			leftMotor.set(leftSpeed);
-			rightMotor.set(rightSpeed);
+			rightMotor.set(-rightSpeed);
 		break;
 		
 		case TELEOP:
