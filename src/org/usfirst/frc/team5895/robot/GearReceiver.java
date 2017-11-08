@@ -10,9 +10,9 @@ public class GearReceiver {
 	private Solenoid gearSolenoid;
 	private Talon gearMotor;
 	private DigitalInput gearSensor;
-	private boolean haveGear;
-	private boolean autoUp;
-
+	private boolean upDown;
+	private double gearSpeed;
+	private boolean ejecting = false;
 
 	public GearReceiver() {
 		gearSolenoid = new Solenoid(ElectricalLayout.GEAR_SOLENOID);
@@ -21,53 +21,40 @@ public class GearReceiver {
 	}
 
 	public void haveGear() {
-		if(gearSensor.get() == true) {
-			haveGear = true;
-			gearMotor.set(0.1);
+		if(gearSensor.get() == false) {
+			gearSpeed = -0.1;
 		}
 		else {
-			haveGear = false;
-			gearMotor.set(1);
-		}
-	}
-	
-	public void reverseGear() {
-		if(haveGear == true) {
-			gearMotor.set(-1);
+			gearSpeed = -1;
 		}
 	}
 	
 	public void placeGear() {
-		autoUp = false; 
-		gearSolenoid.set(true);
-		Waiter.waitFor(100);
-		gearMotor.set(-1);
-		Waiter.waitFor(100);
+		ejecting = true;
+		upDown = true;
+		gearMotor.set(0.5);
 	}
 	
 	public void gearUp() {
-		autoUp = false;
-		gearSolenoid.set(false);
+		ejecting = false;
+		upDown = true;
 	}
 	
 	public void gearDown() {
-		autoUp = false;
-		gearSolenoid.set(true);
-	}
-	
-	public void autoUp() {
-		autoUp = true;
+		ejecting = false;
+		upDown = false;
 	}
 	
 	public void stopMotor() {
-		gearMotor.set(0);
+		gearSpeed = 0;
 	}
 	
 	public void update() {
+		if(!ejecting) {
 		haveGear();
-		if(autoUp == true) {
-			
 		}
+		gearSolenoid.set(upDown);
+		gearMotor.set(gearSpeed);
 	}
 
 }

@@ -17,8 +17,7 @@ public class CenterGearNoSplines {
 		Waiter.waitFor(drivetrain::atDistance, 4000);
 		drivetrain.arcadeDrive(0, 0);
 		gear.placeGear();
-		Waiter.waitFor(1000);
-		drivetrain.arcadeDrive(0.5, 0);
+		drivetrain.arcadeDrive(0.25, 0);
 		Waiter.waitFor(2000);
 		drivetrain.arcadeDrive(0, 0);
 	}

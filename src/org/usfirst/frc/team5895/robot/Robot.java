@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {		
 		//normal teleop drive
-		drivetrain.arcadeDrive(Jleft.getRawAxis(1), -Jright.getRawAxis(0));
+		drivetrain.arcadeDrive(-Jleft.getRawAxis(1), -Jright.getRawAxis(0));
 		
 		//From here on this is the joysticks controls of the main driver
 		
@@ -89,23 +89,20 @@ public class Robot extends IterativeRobot {
 			
 		}
 		
-		//auto raise and lower gear
-		if(Jleft.getRisingEdge(2)) {
-			gear.autoUp();
-		}
+	
 		//manual raise and lower gear
-		if(Jleft.getRisingEdge(3)) {
+		if(Jright.getRisingEdge(1)) {
 			gear.gearUp();
 		}
-		if(Jleft.getRisingEdge(4)) {
+		if(Jright.getRisingEdge(2)) {
 			gear.gearDown();
 		}
 		
 		
 		//Climber State
-		if(Jright.getRisingEdge(3)){
+		if(Jsecond.getRisingEdge(3)){
 			climber.climb();
-		}else if (Jright.getRisingEdge(4)){
+		}else if (Jsecond.getRisingEdge(4)){
 			climber.standing();
 		}
 	}

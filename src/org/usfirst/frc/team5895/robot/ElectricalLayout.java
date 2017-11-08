@@ -5,13 +5,11 @@ public class ElectricalLayout {
 	//Motors
 	public static final int DRIVE_LEFTMOTOR = 0;
 	public static final int DRIVE_RIGHTMOTOR = 1;
-	public static final int CLIMBER_MOTOR = 6;
-	public static final int GEAR_MOTOR = 2;
+	public static final int CLIMBER_MOTOR = 2;
+	public static final int GEAR_MOTOR = 3;
 
 	//Solenoids
-	public static final int GEAR_SOLENOID = 3;
-	public static final int GEAR_DROP_SOLENOID = 2;
-	public static final int SPARE = 0; //push
+	public static final int GEAR_SOLENOID = 0;
 
 	//Digital Inputs
 	public static final int DRIVE_LEFTENCODER = 0;
