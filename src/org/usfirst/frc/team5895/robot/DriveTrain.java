@@ -147,8 +147,8 @@ public class DriveTrain {
 	 * @param turn The left/right turning motion
 	 */
 	public void arcadeDrive( double speed, double turn) {
-		leftSpeed = speed + turn;
-		rightSpeed = -speed + turn;
+		leftSpeed = -speed - turn;
+		rightSpeed = speed - turn;
 		mode = Mode_Type.TELEOP;
 		DriverStation.reportError(" " + leftEncoder.getDistance(), false);
 	}

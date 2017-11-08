@@ -12,7 +12,7 @@ public class GearReceiver {
 	private DigitalInput gearSensor;
 	private boolean upDown;
 	private double gearSpeed;
-	private boolean ejecting = false;
+	private boolean ejecting;
 
 	public GearReceiver() {
 		gearSolenoid = new Solenoid(ElectricalLayout.GEAR_SOLENOID);
@@ -21,7 +21,7 @@ public class GearReceiver {
 	}
 
 	public void haveGear() {
-		if(gearSensor.get() == false) {
+		if(!gearSensor.get()) {
 			gearSpeed = -0.1;
 		}
 		else {
@@ -32,7 +32,7 @@ public class GearReceiver {
 	public void placeGear() {
 		ejecting = true;
 		upDown = true;
-		gearMotor.set(0.5);
+		gearSpeed = 1;
 	}
 	
 	public void gearUp() {

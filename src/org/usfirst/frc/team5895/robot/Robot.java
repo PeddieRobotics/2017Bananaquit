@@ -77,16 +77,13 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {		
 		//normal teleop drive
-		drivetrain.arcadeDrive(-Jleft.getRawAxis(1), -Jright.getRawAxis(0));
+		drivetrain.arcadeDrive(Jleft.getRawAxis(1), Jright.getRawAxis(0));
 		
 		//From here on this is the joysticks controls of the main driver
 		
 		//Open or close the gear intake
 		if(Jleft.getRisingEdge(1)){
 			gear.placeGear();
-		}
-		else if(Jleft.getFallingEdge(1)) {
-			
 		}
 		
 	
