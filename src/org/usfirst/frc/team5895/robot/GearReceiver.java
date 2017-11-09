@@ -32,7 +32,7 @@ public class GearReceiver {
 	public void placeGear() {
 		ejecting = true;
 		upDown = true;
-		gearSpeed = 1;
+		gearSpeed = 0.25;
 	}
 	
 	public void gearUp() {

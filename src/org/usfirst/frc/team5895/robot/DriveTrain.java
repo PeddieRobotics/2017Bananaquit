@@ -26,7 +26,7 @@ public class DriveTrain {
 	private static final double TURN_KP = 0.004;
 	private static final double TURN_KI = 0.00005;
 	
-	private static final double DRIVE_KP = 0.08;
+	private static final double DRIVE_KP = 0.04;
 	private static final double DRIVE_KI = 0.0000001;
 	
 	private static final double DRIVE_TURN_KP = 0.001;
@@ -150,7 +150,6 @@ public class DriveTrain {
 		leftSpeed = -speed - turn;
 		rightSpeed = speed - turn;
 		mode = Mode_Type.TELEOP;
-		DriverStation.reportError(" " + leftEncoder.getDistance(), false);
 	}
 	
 	/**
